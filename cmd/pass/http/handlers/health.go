@@ -19,6 +19,6 @@ func (h *HealthHandler) ServeHTTP(w http.ResponseWriter, _ *http.Request) {
 	fmt.Fprintf(w, "OK")
 }
 
-func (h *HealthHandler) Methods() string {
-	return http.MethodGet
+func (h *HealthHandler) Methods() []string {
+	return []string{http.MethodGet}
 }

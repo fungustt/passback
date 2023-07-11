@@ -17,14 +17,14 @@ type (
 	Handler interface {
 		Route() string
 		ServeHTTP(http.ResponseWriter, *http.Request)
-		Methods() string
+		Methods() []string
 	}
 )
 
 func NewServer(addr string, handlers []Handler) *Server {
 	router := mux.NewRouter()
 	for _, handler := range handlers {
-		router.HandleFunc(handler.Route(), handler.ServeHTTP).Methods(handler.Methods())
+		router.HandleFunc(handler.Route(), handler.ServeHTTP).Methods(handler.Methods()...)
 	}
 
 	return &Server{

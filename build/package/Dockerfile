@@ -29,4 +29,12 @@ RUN addgroup passback && \
     adduser -S -G passback passback && \
     chown -R passback:passback /app
 
+
+HEALTHCHECK \
+    --interval=5s \
+    --timeout=3s \
+    --start-period=2s \
+    --retries=10 \
+    CMD [ "curl", "-s", "http://127.0.0.1:10000/health" ]
+
 EXPOSE 10000

@@ -2,6 +2,11 @@
 docker_build:
 	docker build -f ./build/package/Dockerfile -t pass_backend .
 
+.PHONY: docker_release
+docker_release: docker_build
+	docker tag pass_backend fungustt/pass_backend:dev
+	docker push fungustt/pass_backend:dev
+
 .PHONY: docker_run
 docker_run:
 	docker run -it pass_backend

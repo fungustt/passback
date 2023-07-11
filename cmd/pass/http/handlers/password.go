@@ -25,6 +25,14 @@ func (h *PasswordHandler) Route() string {
 }
 
 func (h *PasswordHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	// Set CORS
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS,PUT")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type")
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	request := model.GeneratePasswordRequest{}
 	raw, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -70,6 +78,6 @@ func (h *PasswordHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (h *PasswordHandler) Methods() string {
-	return http.MethodPost
+func (h *PasswordHandler) Methods() []string {
+	return []string{http.MethodPost, http.MethodOptions}
 }
